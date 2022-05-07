@@ -1,3 +1,4 @@
+import { set } from '@project-serum/anchor/dist/cjs/utils/features';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import twitterLogo from './assets/twitter-logo.svg';
@@ -24,7 +25,10 @@ const checkIfWalletIsConnected = async () => {
           'Connected with Public Key:',
           response.publicKey.toString()
        );
+
+       //set users publicKey in state to be used later on
       
+          setWalletAddress(response.publicKey.toString());
       } else { 
       alert('Solana object not found! Get a Phantom wallet 👻');
     }
@@ -34,7 +38,15 @@ const checkIfWalletIsConnected = async () => {
 };
 
 //When our componenet first mounts, let's check to see if we have a connected phantom wallet
-const connectWallet = async () => {};
+const connectWallet = async () => {
+  const { solana } = window;
+
+  if (solana) { 
+    constqresponse = await solana.connect();
+    console.log('Connected with Public Key:', response.publicKey.toString());
+    setWalletAddress(response.publicKey.toString());
+  }
+};
 
 //render the ui when the user hasn't connected their wallet to our app yet
 const renderNotConnectedContainer = () => (
@@ -61,6 +73,8 @@ useEffect(() => {
         <div className="header-container">
           <p className="header">🍭 Candy Drop</p>
           <p className="sub-text">NFT drop machine with fair mint</p>
+          {/* add the condition to show this only if we don't have a wallet address*/}
+          {!walletAddress && renderNotConnectedContainer()}
           {/* Render your connect to a wallet button right here*/}
           {renderNotConnectedContainer()}
         </div>
