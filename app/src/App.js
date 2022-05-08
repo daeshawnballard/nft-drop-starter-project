@@ -17,7 +17,8 @@ const checkIfWalletIsConnected = async () => {
     const { solana } = window;
 
     
-    if (solana && solana.isPhantom) { 
+    if (solana) { 
+      if (solana.isPhantom) { 
         console.log('Phantom wallet found!');
         //the solana object gives us a function that will allow us to connect directly with the users wallet!
         const response = await solana.connect({ onlyIfTrusted: true });
@@ -27,8 +28,8 @@ const checkIfWalletIsConnected = async () => {
        );
 
        //set users publicKey in state to be used later on
-      
           setWalletAddress(response.publicKey.toString());
+        }
       } else { 
       alert('Solana object not found! Get a Phantom wallet 👻');
     }
@@ -75,8 +76,6 @@ useEffect(() => {
           <p className="sub-text">NFT drop machine with fair mint</p>
           {/* add the condition to show this only if we don't have a wallet address*/}
           {!walletAddress && renderNotConnectedContainer()}
-          {/* Render your connect to a wallet button right here*/}
-          {renderNotConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
