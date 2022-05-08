@@ -5,7 +5,7 @@ import twitterLogo from './assets/twitter-logo.svg';
 
 // Constants
 const TWITTER_HANDLE = 'daeshawnballard';
-const TWITTER_LINK = `https://twitter.com/${daeshawnballard}`;
+const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
   // State
@@ -42,7 +42,7 @@ const connectWallet = async () => {
   const { solana } = window;
 
   if (solana) { 
-    constqresponse = await solana.connect();
+    const response = await solana.connect();
     console.log('Connected with Public Key:', response.publicKey.toString());
     setWalletAddress(response.publicKey.toString());
   }
