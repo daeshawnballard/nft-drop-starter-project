@@ -1,0 +1,24 @@
+{
+    "name": "Daeshawn's Resume: Polygon",
+    "symbol": "DBR",
+    "description": "Collection of 3 versions of daeshawn.sol's web3 product management resume. This is the Polygon version.",
+    "image": "1.png",
+    "attributes": [
+        {"trait_type": "Blockchain", "value": "Polygon"}
+    ],
+    "properties": {
+      "files": [
+        {
+          "uri": "1.png",
+          "type": "image/png"
+        }
+      ],
+      "creators": [
+        {
+          "address": "42qAKsqCA5WXP1c5NeH1FAV8qZe9yyksxZktvZ4hNqPN",
+          "share": 100
+        }
+      ]
+    },
+    "collection": {"name": "web3resume", "family": "web3resume"}
+}
