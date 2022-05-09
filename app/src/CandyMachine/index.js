@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Program, Provider, web3 } from '@project-serum/anchor';
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
@@ -19,12 +19,14 @@ const opts = {
   preflightCommitment: 'processed',
 };
 
+
+
 const CandyMachine = ({ walletAddress }) => {
   useEffect(() => { 
     getCandyMachineState();
   }, []);
 
-
+  const [candyMachine, setCandyMachine] = useState(null);
   const getProvider = () => { 
     const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST;
     //Create a new connection object
@@ -66,7 +68,9 @@ const CandyMachine = ({ walletAddress }) => {
         (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime() /  10000);
 
       //WE will be using this later in our ut so lets make it now
-      const goLiveDateTimeString = '${new Date( goLiveData * 1000 ).toGMTString()}'
+      const goLiveDateTimeString = `${new Date(
+        goLiveData * 1000
+      ).toGMTString()}`
 
       console.log({
         itemsAvailable,
