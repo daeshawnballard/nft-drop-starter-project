@@ -63,7 +63,7 @@ const CandyMachine = ({ walletAddress }) => {
       const presale = 
         candyMachine.data.whitelistMintSettings &&
         candyMachine.data.whitelistMintSettings.presale &&
-        (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime() /  10000);
+        (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime() /  1000);
 
       //Added local time to goLiveDateTimeString
       const goLiveDateTimeString = `${new Date(
@@ -72,36 +72,35 @@ const CandyMachine = ({ walletAddress }) => {
         goLiveData * 1000
       ).toLocaleTimeString()}`;
 
-      setCandyMachine({
-        id: process.env.REACT_APP_CANDY_MACHINE_ID,
-        program,
-        state:{
-          itemsAvailable,
-          itemsRedeemed,
-          itemsRemaining,
-          goLiveData,
-          goLiveDateTimeString,
-          isSoldOut: itemsRemaining === 0,
-          isActive:
-            (presale ||
-              candyMachine.data.goLiveData.toNumber() < new Date().getTime() /  10000) &&
-              (candyMachine.endSettings
-                ? candyMachine.endSettings.endSettingsType.Date
-                  ? candyMachine.endSettings.number.toNumber() > new Date().getTime() / 10000
-                  : itemsRedeemed < candyMachine.endSettings.number.toNumber()
-                  : true),
-          isPresale: presale,
-          goLiveDate: candyMachine.data.goLiveDate,
-          treasury: candyMachine.wallet,
-          tokenMint: candyMachine.tokenMint,
-          gatekeeper: candyMachine.data.gatekeeper,
-          endSettings: candyMachine.data.endSettings,
-          whitelistMintSettings: candyMachine.data.whitelistMintSettings,
-          hiddenSettings: candyMachine.data.hiddenSettings,
-          price: candyMachine.data.price,
-        },
-      });
-
+       setCandyMachine({
+      id: process.env.REACT_APP_CANDY_MACHINE_ID,
+      program,
+      state: {
+        itemsAvailable,
+        itemsRedeemed,
+        itemsRemaining,
+        goLiveData,
+        goLiveDateTimeString,
+        isSoldOut: itemsRemaining === 0,
+        isActive:
+          (presale ||
+            candyMachine.data.goLiveDate.toNumber() < new Date().getTime() / 1000) &&
+          (candyMachine.endSettings
+            ? candyMachine.endSettings.endSettingType.date
+              ? candyMachine.endSettings.number.toNumber() > new Date().getTime() / 1000
+              : itemsRedeemed < candyMachine.endSettings.number.toNumber()
+            : true),
+        isPresale: presale,
+        goLiveDate: candyMachine.data.goLiveDate,
+        treasury: candyMachine.wallet,
+        tokenMint: candyMachine.tokenMint,
+        gatekeeper: candyMachine.data.gatekeeper,
+        endSettings: candyMachine.data.endSettings,
+        whitelistMintSettings: candyMachine.data.whitelistMintSettings,
+        hiddenSettings: candyMachine.data.hiddenSettings,
+        price: candyMachine.data.price,
+      },
+    });
 
       console.log({
         itemsAvailable,
