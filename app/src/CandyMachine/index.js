@@ -67,10 +67,12 @@ const CandyMachine = ({ walletAddress }) => {
         candyMachine.data.whitelistMintSettings.presale &&
         (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime() /  10000);
 
-      //WE will be using this later in our ut so lets make it now
+      //Added local time to goLiveDateTimeString
       const goLiveDateTimeString = `${new Date(
         goLiveData * 1000
-      ).toGMTString()}`
+      ).toLocaleDateString()} @ ${new Date(
+        goLiveData * 1000
+      ).toLocaleTimeString()}`;
 
       console.log({
         itemsAvailable,
