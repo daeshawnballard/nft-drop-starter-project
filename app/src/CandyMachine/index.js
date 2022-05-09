@@ -58,7 +58,7 @@ const CandyMachine = ({ walletAddress }) => {
       ); 
 
       //Parse out all of out metadata and log it out to the console
-      const itemsAvailable = candyMachine.data.itemsAvalible.toNumber();
+      const itemsAvailable = candyMachine.data.itemsAvailable.toNumber();
       const itemsRedeemed = candyMachine.itemsRedeemed.toNumber();
       const itemsRemaining = itemsAvailable - itemsRedeemed;
       const goLiveData = candyMachine.data.goLiveDate.toNumber();
