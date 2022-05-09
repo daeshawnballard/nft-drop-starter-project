@@ -73,8 +73,8 @@ useEffect(() => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header">📄 Daeshawn.sol NFT Resume</p>
-          <p className="sub-text">NFT drop machine with fair mint</p>
+          <p className="header">📄 Mint My Resume</p>
+          <p className="sub-text">Hi, my name is Daeshawn Ballard. Welcome to my resume minting app!</p>
           {/* add the condition to show this only if we don't have a wallet address*/}
           {!walletAddress && renderNotConnectedContainer()}
         </div>
