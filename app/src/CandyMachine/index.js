@@ -13,6 +13,7 @@ import {
   getNetworkToken,
   CIVIC
 } from './helpers';
+import { set } from '@project-serum/anchor/dist/cjs/utils/features';
 
 const { SystemProgram } = web3;
 const opts = {
@@ -45,13 +46,10 @@ const CandyMachine = ({ walletAddress }) => {
   //Declare getCandyMachineState as an async method
   const getCandyMachineState = async () => {
       const provider = getProvider();
-
       //Get metadata about your deployed candy machine program
       const idl = await Program.fetchIdl(candyMachineProgram, provider);
-
       //Create a program that you can call
       const program = new Program(idl, candyMachineProgram, provider);
-
       //Fetch the metadaata from your candy machince from Solana
       const candyMachine = await program.account.candyMachine.fetch(
         process.env.REACT_APP_CANDY_MACHINE_ID
@@ -74,6 +72,37 @@ const CandyMachine = ({ walletAddress }) => {
         goLiveData * 1000
       ).toLocaleTimeString()}`;
 
+      setCandyMachine({
+        id: process.env.REACT_APP_CANDY_MACHINE_ID,
+        program,
+        state:{
+          itemsAvailable,
+          itemsRedeemed,
+          itemsRemaining,
+          goLiveData,
+          goLiveDateTimeString,
+          isSoldOut: itemsRemaining === 0,
+          isActive:
+            (presale ||
+              candyMachine.data.goLiveData.toNumber() < new Date().getTime() /  10000) &&
+              (candyMachine.endSettings
+                ? candyMachine.endSettings.endSettingsType.Date
+                  ? candyMachine.endSettings.number.toNumber() > new Date().getTime() / 10000
+                  : itemsRedeemed < candyMachine.endSettings.number.toNumber()
+                  : true),
+          isPresale: presale,
+          goLiveDate: candyMachine.data.goLiveDate,
+          treasury: candyMachine.wallet,
+          tokenMint: candyMachine.tokenMint,
+          gatekeeper: candyMachine.data.gatekeeper,
+          endSettings: candyMachine.data.endSettings,
+          whitelistMintSettings: candyMachine.data.whitelistMintSettings,
+          hiddenSettings: candyMachine.data.hiddenSettings,
+          price: candyMachine.data.price,
+        },
+      });
+
+
       console.log({
         itemsAvailable,
         itemsRedeemed,
@@ -84,7 +113,6 @@ const CandyMachine = ({ walletAddress }) => {
 
       });
   };
-
 
 
   const getCandyMachineCreator = async (candyMachine) => {
@@ -364,13 +392,16 @@ const CandyMachine = ({ walletAddress }) => {
   };
 
   return (
+    // Only show if machine states is available
+    candyMachine && (
     <div className="machine-container">
-      <p>Drop Date:</p>
-      <p>Items Minted:</p>
+      <p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>
+      <p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvalible}`}</p>
       <button className="cta-button mint-button" onClick={mintToken}>
         Mint NFT
       </button>
     </div>
+    )
   );
 };
 
