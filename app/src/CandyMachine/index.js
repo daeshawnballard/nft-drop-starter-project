@@ -432,8 +432,7 @@ const renderDropTimer = () => {
     candyMachine && (
     <div className="machine-container">
       {renderDropTimer()}
-      <p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>
-      <p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvaliable}`}</p>
+      <p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvailable}`}</p>
       <button className="cta-button mint-button" onClick={mintToken}>
         Mint NFT
       </button>
